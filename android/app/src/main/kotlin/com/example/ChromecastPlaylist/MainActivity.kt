@@ -1,4 +1,4 @@
-package com.example.ChromecastPlaylist
+package com.example.CastPlaylist
 
 import io.flutter.embedding.android.FlutterActivity
 
