@@ -1,7 +1,6 @@
 import 'package:CastPlaylist/widgets/custom_loading.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:cast/discovery_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 import './routes.dart';
 
@@ -25,8 +24,9 @@ class AppComponentState extends State<AppComponent> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: () async {
-        await Future.wait(
-            [DotEnv.load(fileName: kDebugMode ? ".env" : ".env.production")]);
+        await Future.wait([
+          CastDiscoveryService().start(),
+        ]);
       }(),
       builder: (context, snapshot) {
         // Check for errors
@@ -39,7 +39,10 @@ class AppComponentState extends State<AppComponent> {
           return MaterialApp(
             title: 'CAST PLAYLIST',
             debugShowCheckedModeBanner: false,
-            // theme: theme,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
             onGenerateRoute: router.generator,
           );
         }
