@@ -3,7 +3,8 @@ import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/modals/add_video_modal.dart';
+import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
+import 'package:LucaPlay/widgets/modals/upsert_video_modal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class PlaylistScreen extends StatelessWidget {
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: CachedNetworkImage(
-                width: 44,
+                width: 120,
                 height: 44,
                 imageUrl: video.image,
                 placeholder: (context, url) => CustomLoading(),
@@ -87,6 +88,28 @@ class PlaylistScreen extends StatelessWidget {
               SizedBox(height: 16),
               CustomButton(
                 onPressed: () async {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: UpsertPlaylistModal(
+                          playlistBox: playlistBox,
+                          playlist: playlist,
+                        ),
+                      );
+                    },
+                  );
+                },
+                icon: Icons.edit,
+                iconPosition: IconPosition.leading,
+                buttonText: 'Editar',
+              ),
+              SizedBox(height: 16),
+              CustomButton(
+                onPressed: () async {
                   await playlist.delete();
 
                   router.navigateTo(
@@ -113,7 +136,7 @@ class PlaylistScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.8,
-                child: AddVideoModal(
+                child: UpsertVideoModal(
                   playlistBox: playlistBox,
                   playlist: playlist,
                 ),

@@ -1,25 +1,28 @@
 import 'package:LucaPlay/models/playlist.dart';
+import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class AddVideoModal extends StatefulWidget {
+class UpsertVideoModal extends StatefulWidget {
   Box<Playlist> playlistBox;
   Playlist playlist;
+  Video video;
 
-  AddVideoModal({
+  UpsertVideoModal({
     Key key,
     @required this.playlistBox,
     @required this.playlist,
+    this.video,
   }) : super(key: key);
 
   @override
-  createState() => AddVideoModalState();
+  createState() => UpsertVideoModalState();
 }
 
-class AddVideoModalState extends State<AddVideoModal> {
+class UpsertVideoModalState extends State<UpsertVideoModal> {
   final _formKey = GlobalKey<FormState>();
 
   final _titleController = TextEditingController(text: "");
@@ -28,7 +31,7 @@ class AddVideoModalState extends State<AddVideoModal> {
 
   bool _buttonLoading = false;
 
-  AddVideoModalState();
+  UpsertVideoModalState();
 
   onPressed() async {
     try {
@@ -54,7 +57,9 @@ class AddVideoModalState extends State<AddVideoModal> {
       await this.widget.playlist.save();
 
       Navigator.pop(context);
-    } catch (e) {} finally {
+    } catch (e) {
+      print(e);
+    } finally {
       setState(() {
         _buttonLoading = false;
       });
@@ -73,7 +78,7 @@ class AddVideoModalState extends State<AddVideoModal> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CustomTypography(
-              text: "ADICIONAR VÍDEO",
+              text: widget.video != null ? "ADICIONAR VÍDEO" : "EDITAR VÍDEO",
               fontFamily: FontFamily.barlow_condensed,
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
@@ -125,7 +130,7 @@ class AddVideoModalState extends State<AddVideoModal> {
             CustomButton(
               icon: Icons.save,
               iconPosition: IconPosition.leading,
-              buttonText: "Adicionar",
+              buttonText: widget.video != null ? "Adicionar" : "Salvar",
               loading: _buttonLoading,
               onPressed: this.onPressed,
             ),

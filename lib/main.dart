@@ -1,4 +1,5 @@
 import 'package:LucaPlay/models/playlist.dart';
+import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
 import 'package:cast/discovery_service.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,10 @@ class AppComponentState extends State<AppComponent> {
 
         if (!Hive.isAdapterRegistered(PlaylistAdapter().typeId)) {
           Hive.registerAdapter(PlaylistAdapter());
+        }
+
+        if (!Hive.isAdapterRegistered(VideoAdapter().typeId)) {
+          Hive.registerAdapter(VideoAdapter());
         }
 
         await Future.wait([

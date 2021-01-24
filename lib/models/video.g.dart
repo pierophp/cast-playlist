@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'playlist.dart';
+part of 'video.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PlaylistAdapter extends TypeAdapter<Playlist> {
+class VideoAdapter extends TypeAdapter<Video> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  Playlist read(BinaryReader reader) {
+  Video read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Playlist(
-      name: fields[0] as String,
-      videos: (fields[1] as List)?.cast<Video>(),
+    return Video(
+      title: fields[0] as String,
+      url: fields[1] as String,
+      image: fields[2] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Playlist obj) {
+  void write(BinaryWriter writer, Video obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.videos);
+      ..write(obj.url)
+      ..writeByte(2)
+      ..write(obj.image);
   }
 
   @override
@@ -38,7 +41,7 @@ class PlaylistAdapter extends TypeAdapter<Playlist> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PlaylistAdapter &&
+      other is VideoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

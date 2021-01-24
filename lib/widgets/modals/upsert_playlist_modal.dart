@@ -5,26 +5,35 @@ import 'package:LucaPlay/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class AddPlaylistModal extends StatefulWidget {
+class UpsertPlaylistModal extends StatefulWidget {
   Box<Playlist> playlistBox;
+  Playlist playlist;
 
-  AddPlaylistModal({
+  UpsertPlaylistModal({
     Key key,
     @required this.playlistBox,
+    this.playlist,
   }) : super(key: key);
 
   @override
-  createState() => AddPlaylistModalState();
+  createState() => UpsertPlaylistModalState();
 }
 
-class AddPlaylistModalState extends State<AddPlaylistModal> {
+class UpsertPlaylistModalState extends State<UpsertPlaylistModal> {
   final _formKey = GlobalKey<FormState>();
 
-  final _nameController = TextEditingController(text: "");
+  TextEditingController _nameController;
 
   bool _buttonLoading = false;
 
-  AddPlaylistModalState();
+  UpsertPlaylistModalState();
+
+  initState() {
+    super.initState();
+    _nameController = TextEditingController(
+      text: widget.playlist != null ? widget.playlist.name : "",
+    );
+  }
 
   onPressed() async {
     try {
@@ -37,14 +46,22 @@ class AddPlaylistModalState extends State<AddPlaylistModal> {
         return;
       }
 
-      await this.widget.playlistBox.add(
-            Playlist(
-              name: this._nameController.text,
-            ),
-          );
+      if (this.widget.playlist == null) {
+        await this.widget.playlistBox.add(
+              Playlist(
+                name: this._nameController.text,
+              ),
+            );
+      } else {
+        final playlist = this.widget.playlist;
+        playlist.name = this._nameController.text;
+        await playlist.save();
+      }
 
       Navigator.pop(context);
-    } catch (e) {} finally {
+    } catch (e) {
+      print(e);
+    } finally {
       setState(() {
         _buttonLoading = false;
       });
@@ -63,7 +80,9 @@ class AddPlaylistModalState extends State<AddPlaylistModal> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CustomTypography(
-              text: "CRIAR PLAYLIST",
+              text: widget.playlist == null
+                  ? "CRIAR PLAYLIST"
+                  : "EDITAR PLAYLIST",
               fontFamily: FontFamily.barlow_condensed,
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
@@ -89,7 +108,7 @@ class AddPlaylistModalState extends State<AddPlaylistModal> {
             CustomButton(
               icon: Icons.save,
               iconPosition: IconPosition.leading,
-              buttonText: "Criar",
+              buttonText: widget.playlist == null ? "Criar" : "Salvar",
               loading: _buttonLoading,
               onPressed: this.onPressed,
             ),
