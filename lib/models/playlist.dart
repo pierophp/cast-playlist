@@ -5,4 +5,8 @@ part 'playlist.g.dart';
 class Playlist {
   @HiveField(0)
   String name;
+
+  Playlist({
+    this.name,
+  });
 }

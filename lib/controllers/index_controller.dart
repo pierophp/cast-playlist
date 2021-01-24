@@ -22,7 +22,9 @@ class IndexController extends StatelessWidget {
             builder: (context, Box<Playlist> box, widget) {
               return Scaffold(
                 backgroundColor: const Color(0xffF8F8F8),
-                body: IndexScreen(),
+                body: IndexScreen(
+                  playlistBox: box,
+                ),
                 appBar: CustomAppBar(
                   title: 'LUCA PLAY',
                   withLogo: false,
