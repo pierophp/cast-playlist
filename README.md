@@ -1,4 +1,4 @@
-# CastPlaylist
+# Luca Play
 
 O projeto usa Flutter.
 
@@ -36,7 +36,7 @@ App Store Connect -> Upload -> Automatically manage signing.
 
 ```
 cd "C:\Program Files\Android\Android Studio\jre\bin"
-keytool.exe -genkey -v -keystore c:\Users\pierog_beyoung\dev\key.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias key
+keytool.exe -genkey -v -keystore c:\Users\MY_USER\dev\key.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias key
 ```
 
 Copiar o arquivo android/key.properties.template para android/key.properties.
@@ -60,7 +60,6 @@ flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/symbols
 flutter pub run flutter_launcher_icons:main
 ```
 
-# Pendências
+# Gerar código Hive
 
-- Quando lançar o Flutter 1.24+ migrar pra null safety https://flutter.dev/docs/null-safety
-- Migrar pra tipagem em vez de Map
+flutter packages pub run build_runner build --delete-conflicting-outputs

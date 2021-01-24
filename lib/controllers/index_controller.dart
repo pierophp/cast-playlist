@@ -1,7 +1,11 @@
-import 'package:CastPlaylist/screens/index_screen.dart';
-import 'package:CastPlaylist/widgets/custom_loading.dart';
+import 'package:LucaPlay/models/playlist.dart';
+import 'package:LucaPlay/screens/index_screen.dart';
+import 'package:LucaPlay/widgets/custom_loading.dart';
+import 'package:LucaPlay/widgets/cutom_appbar.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class IndexController extends StatelessWidget {
   @override
@@ -13,7 +17,18 @@ class IndexController extends StatelessWidget {
           return CustomLoading();
         }
 
-        return IndexScreen();
+        return ValueListenableBuilder(
+            valueListenable: Hive.box<Playlist>('playlists').listenable(),
+            builder: (context, Box<Playlist> box, widget) {
+              return Scaffold(
+                backgroundColor: const Color(0xffF8F8F8),
+                body: IndexScreen(),
+                appBar: CustomAppBar(
+                  title: 'LUCA PLAY',
+                  withLogo: false,
+                ),
+              );
+            });
       },
     );
   }
