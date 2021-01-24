@@ -28,7 +28,10 @@ class AppComponentState extends State<AppComponent> {
     return FutureBuilder(
       future: () async {
         await Hive.initFlutter();
-        Hive.registerAdapter(PlaylistAdapter());
+
+        if (!Hive.isAdapterRegistered(PlaylistAdapter().typeId)) {
+          Hive.registerAdapter(PlaylistAdapter());
+        }
 
         await Future.wait([
           CastDiscoveryService().start(),

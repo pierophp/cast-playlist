@@ -1,7 +1,9 @@
+import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/widgets/device_list.dart';
 import 'package:LucaPlay/widgets/modals/add_playlist_modal.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -13,23 +15,47 @@ class IndexScreen extends StatelessWidget {
     Box<Playlist> this.playlistBox,
   }) : super(key: key);
 
-  Widget build(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     if (playlistBox.isEmpty) {
-      return Text("Sem Playlists");
+      return Flex(
+        direction: Axis.horizontal,
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(40),
+              child: CustomTypography(
+                text: "Sem Playlist",
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      );
     }
 
+    return Column(
+      children: playlistBox.values.map<Widget>((playlist) {
+        return ListTile(
+          title: CustomTypography(
+            text: playlist.name,
+            textAlign: TextAlign.start,
+          ),
+          onTap: () {
+            router.navigateTo(
+              context,
+              "/playlist/${playlist.key}",
+              transition: TransitionType.inFromRight,
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       //body: DeviceList(),
-      body: Column(
-        children: playlistBox.values.map<Widget>((playlist) {
-          return ListTile(
-            title: CustomTypography(
-              text: playlist.name,
-              textAlign: TextAlign.start,
-            ),
-          );
-        }).toList(),
-      ),
+      body: this._buildBody(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
