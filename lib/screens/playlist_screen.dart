@@ -17,9 +17,9 @@ class PlaylistScreen extends StatelessWidget {
   Playlist playlist;
 
   PlaylistScreen({
-    Key key,
-    @required Box<Playlist> this.playlistBox,
-    @required Playlist this.playlist,
+    Key? key,
+    required Box<Playlist> this.playlistBox,
+    required Playlist this.playlist,
   }) : super(key: key);
 
   Future<void> handlePlayAll() async {
@@ -28,7 +28,7 @@ class PlaylistScreen extends StatelessWidget {
       'type': 'LOAD',
       'queueData': {
         'name': this.playlist.name,
-        'items': playlist.videos.map((video) {
+        'items': playlist.videos?.map((video) {
           return {
             'media': {
               'contentId': video.url,
@@ -51,14 +51,14 @@ class PlaylistScreen extends StatelessWidget {
       },
     };
 
-    ChromecastService.session.sendMessage(
+    ChromecastService.session?.sendMessage(
       CastSession.kNamespaceMedia,
       request,
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    if (playlist.videos == null || playlist.videos.length == 0) {
+    if ((playlist.videos?.length ?? 0) == 0) {
       return Flex(
         direction: Axis.horizontal,
         children: [
@@ -88,7 +88,7 @@ class PlaylistScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        ...playlist.videos
+        ...(playlist.videos ?? [])
             .map<List<Widget>>((video) {
               return [
                 ListTile(

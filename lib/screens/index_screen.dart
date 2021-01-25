@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
@@ -12,8 +14,8 @@ class IndexScreen extends StatelessWidget {
   Box<Playlist> playlistBox;
 
   IndexScreen({
-    Key key,
-    Box<Playlist> this.playlistBox,
+    Key? key,
+    required this.playlistBox,
   }) : super(key: key);
 
   Future<void> handleImportFile() async {
@@ -21,6 +23,12 @@ class IndexScreen extends StatelessWidget {
       type: FileType.custom,
       allowedExtensions: ['json'],
     );
+
+    if (result != null) {
+      File file = File(result.files.single.path);
+
+      print(file.toString());
+    }
   }
 
   Widget _buildBody(BuildContext context) {

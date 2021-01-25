@@ -14,18 +14,18 @@ class InputState {
 class Input extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
-  final String hintText;
-  final IconData icon;
+  final String? hintText;
+  final IconData? icon;
   final TextInputType inputType;
   final bool isPassword;
   final InputState state;
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
 
   const Input({
-    Key key,
-    @required this.controller,
-    @required this.labelText,
-    @required this.inputType,
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    required this.inputType,
     this.hintText,
     this.icon,
     this.isPassword = false,

@@ -1,16 +1,16 @@
 import 'package:cast/cast.dart';
 
 class ChromecastService {
-  static CastSession session;
+  static CastSession? session;
   static bool connected = false;
 
   Future<CastSession> connect(CastDevice device) async {
     ChromecastService.session = await CastSessionManager().startSession(device);
-    ChromecastService.session.stateStream.listen((state) {
+    ChromecastService.session?.stateStream.listen((state) {
       if (state == CastSessionState.connected) {
         // _sendMessage(session);
 
-        session.messageStream.listen((message) {
+        ChromecastService.session?.messageStream.listen((message) {
           print('receive message: $message');
           print('type ${message["type"]}');
 
@@ -22,11 +22,11 @@ class ChromecastService {
       }
     });
 
-    ChromecastService.session.sendMessage(CastSession.kNamespaceReceiver, {
+    ChromecastService.session?.sendMessage(CastSession.kNamespaceReceiver, {
       'type': 'LAUNCH',
       'appId': '639B1660',
     });
 
-    return ChromecastService.session;
+    return ChromecastService.session!;
   }
 }

@@ -8,11 +8,11 @@ class Video extends HiveObject {
   @HiveField(1)
   String url;
   @HiveField(2)
-  String image;
+  String? image;
 
   Video({
-    this.title,
-    this.url,
+    required this.title,
+    required this.url,
     this.image,
   });
 }

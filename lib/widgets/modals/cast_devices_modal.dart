@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class CastDevicesModal extends StatefulWidget {
   CastDevicesModal({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -39,7 +39,7 @@ class CastDevicesModalState extends State<CastDevicesModal> {
                 color: Colors.black,
                 textAlign: TextAlign.center,
               ),
-              ...snapshot.data.map((device) {
+              ...snapshot.data!.map((device) {
                 return ListTile(
                   title: Text(device.name),
                   onTap: () async {
