@@ -1,14 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
+// import 'dart:convert';
+// import 'dart:io';
 
-import 'package:LucaPlay/helpers/snackbar_helper.dart';
-import 'package:LucaPlay/models/video.dart';
+// import 'package:LucaPlay/helpers/snackbar_helper.dart';
+// import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -34,39 +34,39 @@ class _IndexScreenState extends State<IndexScreen> {
     });
 
     try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['json'],
-      );
+      // final result = await FilePicker.platform.pickFiles(
+      //   type: FileType.custom,
+      //   allowedExtensions: ['json'],
+      // );
 
-      if (result?.files.single.path != null) {
-        File file = File(result!.files.single.path!);
+      // if (result?.files.single.path != null) {
+      //   File file = File(result!.files.single.path!);
 
-        final importedObject = jsonDecode(await file.readAsString());
+      //   final importedObject = jsonDecode(await file.readAsString());
 
-        final List<Video> videos = [];
-        for (var videoObject in importedObject["videos"] ?? []) {
-          videos.add(Video(
-            title: videoObject["title"],
-            url: videoObject["url"],
-            image: videoObject["image"],
-          ));
-        }
+      //   final List<Video> videos = [];
+      //   for (var videoObject in importedObject["videos"] ?? []) {
+      //     videos.add(Video(
+      //       title: videoObject["title"],
+      //       url: videoObject["url"],
+      //       image: videoObject["image"],
+      //     ));
+      //   }
 
-        final playlist = Playlist(
-          name: importedObject["name"],
-          videos: videos,
-        );
+      //   final playlist = Playlist(
+      //     name: importedObject["name"],
+      //     videos: videos,
+      //   );
 
-        await this.widget.playlistBox.add(
-              playlist,
-            );
+      //   await this.widget.playlistBox.add(
+      //         playlist,
+      //       );
 
-        SnackbarHelper.show(
-          context: context,
-          text: 'Playlist importa com sucesso!',
-        );
-      }
+      //   SnackbarHelper.show(
+      //     context: context,
+      //     text: 'Playlist importada com sucesso!',
+      //   );
+      // }
     } catch (e) {
       throw e;
     } finally {
