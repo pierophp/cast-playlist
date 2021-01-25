@@ -22,6 +22,41 @@ class PlaylistScreen extends StatelessWidget {
     @required Playlist this.playlist,
   }) : super(key: key);
 
+  Future<void> handlePlayAll() async {
+    final request = {
+      'requestId': 2,
+      'type': 'LOAD',
+      'queueData': {
+        'name': this.playlist.name,
+        'items': playlist.videos.map((video) {
+          return {
+            'media': {
+              'contentId': video.url,
+              'contentType': 'video/mp4',
+              'streamType': 'BUFFERED',
+              'autoplay': true,
+              'metadata': {
+                'type': 0,
+                'metadataType': 0,
+                'title': video.title,
+                'images': [
+                  {
+                    'url': video.image,
+                  }
+                ]
+              }
+            },
+          };
+        }).toList(),
+      },
+    };
+
+    ChromecastService.session.sendMessage(
+      CastSession.kNamespaceMedia,
+      request,
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     if (playlist.videos == null || playlist.videos.length == 0) {
       return Flex(
@@ -46,40 +81,7 @@ class PlaylistScreen extends StatelessWidget {
         Container(
           padding: EdgeInsets.fromLTRB(32, 16, 24, 16),
           child: CustomButton(
-            onPressed: () async {
-              final request = {
-                'requestId': 2,
-                'type': 'LOAD',
-                'queueData': {
-                  'name': this.playlist.name,
-                  'items': playlist.videos.map((video) {
-                    return {
-                      'media': {
-                        'contentId': video.url,
-                        'contentType': 'video/mp4',
-                        'streamType': 'BUFFERED',
-                        'autoplay': true,
-                        'metadata': {
-                          'type': 0,
-                          'metadataType': 0,
-                          'title': video.title,
-                          'images': [
-                            {
-                              'url': video.image,
-                            }
-                          ]
-                        }
-                      },
-                    };
-                  }).toList(),
-                },
-              };
-
-              ChromecastService.session.sendMessage(
-                CastSession.kNamespaceMedia,
-                request,
-              );
-            },
+            onPressed: this.handlePlayAll,
             icon: Icons.play_arrow,
             iconPosition: IconPosition.leading,
             buttonText: 'Reproduzir Todos',

@@ -18,19 +18,20 @@ class IndexController extends StatelessWidget {
         }
 
         return ValueListenableBuilder(
-            valueListenable: Hive.box<Playlist>('playlists').listenable(),
-            builder: (context, Box<Playlist> box, widget) {
-              return Scaffold(
-                backgroundColor: const Color(0xffF8F8F8),
-                body: IndexScreen(
-                  playlistBox: box,
-                ),
-                appBar: CustomAppBar(
-                  title: 'LUCA PLAY',
-                  withLogo: false,
-                ),
-              );
-            });
+          valueListenable: Hive.box<Playlist>('playlists').listenable(),
+          builder: (context, Box<Playlist> box, widget) {
+            return Scaffold(
+              backgroundColor: const Color(0xffF8F8F8),
+              body: IndexScreen(
+                playlistBox: box,
+              ),
+              appBar: CustomAppBar(
+                title: 'LUCA PLAY',
+                withLogo: false,
+              ),
+            );
+          },
+        );
       },
     );
   }
