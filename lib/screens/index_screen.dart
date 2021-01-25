@@ -34,13 +34,13 @@ class _IndexScreenState extends State<IndexScreen> {
     });
 
     try {
-      FilePickerResult result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
 
-      if (result != null) {
-        File file = File(result.files.single.path);
+      if (result?.files.single.path != null) {
+        File file = File(result!.files.single.path!);
 
         final importedObject = jsonDecode(await file.readAsString());
 
