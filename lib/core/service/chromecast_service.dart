@@ -24,8 +24,7 @@ class ChromecastService {
 
     ChromecastService.session.sendMessage(CastSession.kNamespaceReceiver, {
       'type': 'LAUNCH',
-      // 'appId': '639B1660',
-      'appId': 'CC1AD845',
+      'appId': '639B1660',
     });
 
     return ChromecastService.session;

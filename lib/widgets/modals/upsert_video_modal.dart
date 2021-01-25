@@ -78,7 +78,7 @@ class UpsertVideoModalState extends State<UpsertVideoModal> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CustomTypography(
-              text: widget.video != null ? "ADICIONAR VÍDEO" : "EDITAR VÍDEO",
+              text: widget.video == null ? "ADICIONAR VÍDEO" : "EDITAR VÍDEO",
               fontFamily: FontFamily.barlow_condensed,
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
@@ -130,7 +130,7 @@ class UpsertVideoModalState extends State<UpsertVideoModal> {
             CustomButton(
               icon: Icons.save,
               iconPosition: IconPosition.leading,
-              buttonText: widget.video != null ? "Adicionar" : "Salvar",
+              buttonText: widget.video == null ? "Adicionar" : "Salvar",
               loading: _buttonLoading,
               onPressed: this.onPressed,
             ),

@@ -1,3 +1,4 @@
+import 'package:LucaPlay/core/service/chromecast_service.dart';
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
@@ -6,6 +7,7 @@ import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
 import 'package:LucaPlay/widgets/modals/upsert_video_modal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cast/cast.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -45,7 +47,38 @@ class PlaylistScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(32, 16, 24, 16),
           child: CustomButton(
             onPressed: () async {
-              print("Reproduzir");
+              final request = {
+                'requestId': 2,
+                'type': 'LOAD',
+                'queueData': {
+                  'name': this.playlist.name,
+                  'items': playlist.videos.map((video) {
+                    return {
+                      'media': {
+                        'contentId': video.url,
+                        'contentType': 'video/mp4',
+                        'streamType': 'BUFFERED',
+                        'autoplay': true,
+                        'metadata': {
+                          'type': 0,
+                          'metadataType': 0,
+                          'title': video.title,
+                          'images': [
+                            {
+                              'url': video.image,
+                            }
+                          ]
+                        }
+                      },
+                    };
+                  }).toList(),
+                },
+              };
+
+              ChromecastService.session.sendMessage(
+                CastSession.kNamespaceMedia,
+                request,
+              );
             },
             icon: Icons.play_arrow,
             iconPosition: IconPosition.leading,
