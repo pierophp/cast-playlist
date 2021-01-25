@@ -11,6 +11,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import './routes.dart';
 
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 void main() async {
   runApp(AppComponent());
 }
@@ -62,6 +65,7 @@ class AppComponentState extends State<AppComponent> {
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             onGenerateRoute: router.generator,
+            scaffoldMessengerKey: rootScaffoldMessengerKey,
           );
         }
 

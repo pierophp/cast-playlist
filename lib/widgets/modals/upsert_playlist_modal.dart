@@ -1,3 +1,4 @@
+import 'package:LucaPlay/helpers/snackbar_helper.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
@@ -52,10 +53,20 @@ class UpsertPlaylistModalState extends State<UpsertPlaylistModal> {
                 name: this._nameController!.text,
               ),
             );
+
+        SnackbarHelper.show(
+          context: context,
+          text: 'Playlist criada com sucesso!',
+        );
       } else {
         final playlist = this.widget.playlist!;
         playlist.name = this._nameController!.text;
         await playlist.save();
+
+        SnackbarHelper.show(
+          context: context,
+          text: 'Playlist atualizada com sucesso!',
+        );
       }
 
       Navigator.pop(context);

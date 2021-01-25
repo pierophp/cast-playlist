@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:LucaPlay/helpers/snackbar_helper.dart';
+import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
@@ -10,7 +13,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class IndexScreen extends StatelessWidget {
+class IndexScreen extends StatefulWidget {
   Box<Playlist> playlistBox;
 
   IndexScreen({
@@ -18,21 +21,63 @@ class IndexScreen extends StatelessWidget {
     required this.playlistBox,
   }) : super(key: key);
 
+  @override
+  _IndexScreenState createState() => _IndexScreenState();
+}
+
+class _IndexScreenState extends State<IndexScreen> {
+  bool _buttonImportLoading = false;
+
   Future<void> handleImportFile() async {
-    FilePickerResult result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-    );
+    setState(() {
+      _buttonImportLoading = true;
+    });
 
-    if (result != null) {
-      File file = File(result.files.single.path);
+    try {
+      FilePickerResult result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
 
-      print(file.toString());
+      if (result != null) {
+        File file = File(result.files.single.path);
+
+        final importedObject = jsonDecode(await file.readAsString());
+
+        final List<Video> videos = [];
+        for (var videoObject in importedObject["videos"] ?? []) {
+          videos.add(Video(
+            title: videoObject["title"],
+            url: videoObject["url"],
+            image: videoObject["image"],
+          ));
+        }
+
+        final playlist = Playlist(
+          name: importedObject["name"],
+          videos: videos,
+        );
+
+        await this.widget.playlistBox.add(
+              playlist,
+            );
+
+        SnackbarHelper.show(
+          context: context,
+          text: 'Playlist importa com sucesso!',
+        );
+      }
+    } catch (e) {
+      throw e;
+    } finally {
+      setState(() {
+        _buttonImportLoading = false;
+      });
     }
   }
 
   Widget _buildBody(BuildContext context) {
-    if (playlistBox.isEmpty) {
+    if (widget.playlistBox.isEmpty) {
       return Flex(
         direction: Axis.horizontal,
         children: [
@@ -50,7 +95,7 @@ class IndexScreen extends StatelessWidget {
     }
 
     return Column(children: [
-      ...playlistBox.values.map<Widget>((playlist) {
+      ...widget.playlistBox.values.map<Widget>((playlist) {
         return ListTile(
           title: CustomTypography(
             text: playlist.name,
@@ -83,6 +128,7 @@ class IndexScreen extends StatelessWidget {
                 icon: Icons.file_upload,
                 iconPosition: IconPosition.leading,
                 buttonText: 'Importar Arquivo',
+                loading: _buttonImportLoading,
               ),
             ]),
           ),
@@ -98,7 +144,7 @@ class IndexScreen extends StatelessWidget {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: UpsertPlaylistModal(
-                  playlistBox: playlistBox,
+                  playlistBox: widget.playlistBox,
                 ),
               );
             },

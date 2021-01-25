@@ -1,3 +1,4 @@
+import 'package:LucaPlay/helpers/snackbar_helper.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
@@ -55,6 +56,11 @@ class UpsertVideoModalState extends State<UpsertVideoModal> {
           ));
 
       await this.widget.playlist.save();
+
+      SnackbarHelper.show(
+        context: context,
+        text: 'Vídeo adicionado com sucesso!',
+      );
 
       Navigator.pop(context);
     } catch (e) {
