@@ -1,8 +1,9 @@
 import 'package:LucaPlay/routes.dart';
+import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/device_list.dart';
 import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -14,6 +15,13 @@ class IndexScreen extends StatelessWidget {
     Key key,
     Box<Playlist> this.playlistBox,
   }) : super(key: key);
+
+  Future<void> handleImportFile() async {
+    FilePickerResult result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+    );
+  }
 
   Widget _buildBody(BuildContext context) {
     if (playlistBox.isEmpty) {
@@ -33,8 +41,8 @@ class IndexScreen extends StatelessWidget {
       );
     }
 
-    return Column(
-      children: playlistBox.values.map<Widget>((playlist) {
+    return Column(children: [
+      ...playlistBox.values.map<Widget>((playlist) {
         return ListTile(
           title: CustomTypography(
             text: playlist.name,
@@ -50,13 +58,28 @@ class IndexScreen extends StatelessWidget {
           },
         );
       }).toList(),
-    );
+    ]);
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: DeviceList(),
-      body: this._buildBody(context),
+      body: ListView(
+        children: [
+          this._buildBody(context),
+          Container(
+            padding: EdgeInsets.fromLTRB(32, 16, 24, 16),
+            child: Column(children: [
+              SizedBox(height: 16),
+              CustomButton(
+                onPressed: this.handleImportFile,
+                icon: Icons.file_upload,
+                iconPosition: IconPosition.leading,
+                buttonText: 'Importar Arquivo',
+              ),
+            ]),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
