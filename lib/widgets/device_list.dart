@@ -4,7 +4,7 @@ import 'package:cast/device.dart';
 import 'package:flutter/material.dart';
 
 class DeviceList extends StatelessWidget {
-  CastSession session;
+  static CastSession session;
 
   DeviceList({
     Key key,
@@ -18,7 +18,7 @@ class DeviceList extends StatelessWidget {
         stream: CastDiscoveryService().stream,
         initialData: CastDiscoveryService().devices,
         builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data.length == 0) {
+          if (!snapshot.hasData) {
             return CustomLoading();
           }
 
@@ -35,8 +35,6 @@ class DeviceList extends StatelessWidget {
               ElevatedButton(
                 child: Text("PLAY"),
                 onPressed: () {
-                  print("Play");
-
                   session.sendMessage(CastSession.kNamespaceMedia, {
                     'requestId': 2,
                     'type': 'LOAD',

@@ -1,4 +1,6 @@
+import 'package:LucaPlay/core/service/chromecast_service.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
+import 'package:LucaPlay/widgets/modals/cast_devices_modal.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,6 +22,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       backgroundColor: Colors.white,
+      actions: [
+        Container(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: IconButton(
+            icon: const Icon(Icons.cast),
+            color: Colors.black,
+            onPressed: () {
+              showModalBottomSheet<void>(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: CastDevicesModal(),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -33,7 +57,7 @@ Widget getMain(withLogo, title) {
       width: 32,
       height: 16,
       child: Icon(
-        Icons.cast,
+        ChromecastService.connected ? Icons.cast_connected : Icons.cast,
         color: Colors.black,
       ),
     );

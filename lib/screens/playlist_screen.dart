@@ -40,33 +40,54 @@ class PlaylistScreen extends StatelessWidget {
 
     return Column(
       children: [
-        ...playlist.videos.map<Widget>((video) {
-          return ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: CachedNetworkImage(
-                width: 120,
-                height: 44,
-                imageUrl: video.image,
-                placeholder: (context, url) => CustomLoading(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
-            ),
-            title: CustomTypography(
-              text: video.title,
-              textAlign: TextAlign.start,
-              fontWeight: FontWeight.bold,
-            ),
-            onTap: () {},
-          );
-        }).toList(),
+        SizedBox(height: 16),
+        Container(
+          padding: EdgeInsets.fromLTRB(32, 16, 24, 16),
+          child: CustomButton(
+            onPressed: () async {
+              print("Reproduzir");
+            },
+            icon: Icons.play_arrow,
+            iconPosition: IconPosition.leading,
+            buttonText: 'Reproduzir Todos',
+          ),
+        ),
+        SizedBox(height: 16),
+        ...playlist.videos
+            .map<List<Widget>>((video) {
+              return [
+                ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(3),
+                    child: CachedNetworkImage(
+                      width: 120,
+                      height: 44,
+                      imageUrl: video.image,
+                      placeholder: (context, url) => CustomLoading(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  ),
+                  title: CustomTypography(
+                    text: video.title,
+                    textAlign: TextAlign.start,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onTap: () {},
+                ),
+                SizedBox(
+                  height: 5,
+                )
+              ];
+            })
+            .expand((e) => e)
+            .toList(),
       ],
     );
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           this._buildBody(context),
           Container(

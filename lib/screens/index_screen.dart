@@ -55,7 +55,7 @@ class IndexScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      //body: DeviceList(),
+      // body: DeviceList(),
       body: this._buildBody(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

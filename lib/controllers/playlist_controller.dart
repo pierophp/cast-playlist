@@ -1,9 +1,8 @@
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/routes.dart';
-import 'package:LucaPlay/screens/index_screen.dart';
 import 'package:LucaPlay/screens/playlist_screen.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
-import 'package:LucaPlay/widgets/cutom_appbar.dart';
+import 'package:LucaPlay/widgets/custom_appbar.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
