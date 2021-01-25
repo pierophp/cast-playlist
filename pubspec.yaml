@@ -26,7 +26,7 @@ dependencies:
   cached_network_image: ^2.4.1
   cast: ^0.1.1
   dio: "^3.0.10"
-  file_picker: ^2.1.5+1
+  file_picker: ^3.0.0-nullsafety.2
   fluro: ^1.7.8
   flutter_dotenv: ^3.0.2
   hive_flutter: ^0.3.1
