@@ -139,7 +139,7 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_IOS_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          group: testers
+          group: beta
           file: Runner.ipa
   beta_apk:
     name: Upload Android Beta to Firebase App Distribution
