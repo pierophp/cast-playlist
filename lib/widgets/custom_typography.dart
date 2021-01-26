@@ -16,8 +16,8 @@ class CustomTypography extends StatelessWidget {
   final TextDecoration decoration;
 
   const CustomTypography({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
     this.fontFamily = FontFamily.montserrat,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w400,

@@ -12,8 +12,8 @@ class PlaylistController extends StatelessWidget {
   String code;
 
   PlaylistController({
-    Key key,
-    @required this.code,
+    Key? key,
+    required this.code,
   }) : super(key: key);
 
   @override

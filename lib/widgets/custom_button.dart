@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 enum IconPosition { trailing, leading }
 
 class CustomButton extends StatelessWidget {
-  final String buttonText;
+  final String? buttonText;
   final void Function() onPressed;
   final Color backgroundColor;
   final Color textColor;
   final bool withBorder;
   final Color borderColor;
   final double fontSize;
-  final IconPosition iconPosition;
-  final IconData icon;
+  final IconPosition? iconPosition;
+  final IconData? icon;
   final bool disabled;
   final bool loading;
 
   const CustomButton({
-    Key key,
-    @required this.onPressed,
+    Key? key,
+    required this.onPressed,
     this.backgroundColor = Colors.black,
     this.textColor = Colors.white,
     this.buttonText,
@@ -77,9 +77,9 @@ class CustomButton extends StatelessWidget {
 }
 
 dynamic getIcon(
-  String buttonText,
-  IconPosition iconPosition,
-  IconData icon,
+  String? buttonText,
+  IconPosition? iconPosition,
+  IconData? icon,
 ) {
   if (iconPosition == IconPosition.leading) {
     return Row(

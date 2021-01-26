@@ -4,11 +4,11 @@ import 'package:LucaPlay/widgets/modals/cast_devices_modal.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool withLogo;
-  final String title;
+  final bool? withLogo;
+  final String? title;
 
   const CustomAppBar({
-    Key key,
+    Key? key,
     this.withLogo,
     this.title,
   }) : super(key: key);

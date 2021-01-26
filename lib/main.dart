@@ -1,3 +1,6 @@
+// REMOVER QUANDO TODAS AS LIBS SUPORTAREM NULL SAFETY
+// https://dart.dev/null-safety/unsound-null-safety
+// @dart=2.9
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
@@ -7,6 +10,9 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import './routes.dart';
+
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
   runApp(AppComponent());
@@ -59,6 +65,7 @@ class AppComponentState extends State<AppComponent> {
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             onGenerateRoute: router.generator,
+            scaffoldMessengerKey: rootScaffoldMessengerKey,
           );
         }
 

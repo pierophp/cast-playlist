@@ -1,3 +1,4 @@
+import 'package:LucaPlay/helpers/snackbar_helper.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
@@ -9,12 +10,12 @@ import 'package:hive/hive.dart';
 class UpsertVideoModal extends StatefulWidget {
   Box<Playlist> playlistBox;
   Playlist playlist;
-  Video video;
+  Video? video;
 
   UpsertVideoModal({
-    Key key,
-    @required this.playlistBox,
-    @required this.playlist,
+    Key? key,
+    required this.playlistBox,
+    required this.playlist,
     this.video,
   }) : super(key: key);
 
@@ -39,7 +40,7 @@ class UpsertVideoModalState extends State<UpsertVideoModal> {
         _buttonLoading = true;
       });
 
-      final form = _formKey.currentState;
+      final form = _formKey.currentState!;
       if (!form.validate()) {
         return;
       }
@@ -48,13 +49,18 @@ class UpsertVideoModalState extends State<UpsertVideoModal> {
         this.widget.playlist.videos = [];
       }
 
-      this.widget.playlist.videos.add(Video(
+      this.widget.playlist.videos!.add(Video(
             title: this._titleController.text,
             url: this._urlController.text,
             image: this._imageController.text,
           ));
 
       await this.widget.playlist.save();
+
+      SnackbarHelper.show(
+        context: context,
+        text: 'Vídeo adicionado com sucesso!',
+      );
 
       Navigator.pop(context);
     } catch (e) {

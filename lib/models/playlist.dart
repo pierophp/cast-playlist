@@ -8,10 +8,10 @@ class Playlist extends HiveObject {
   String name;
 
   @HiveField(1)
-  List<Video> videos;
+  List<Video>? videos;
 
   Playlist({
-    this.name,
+    required this.name,
     this.videos,
   });
 }
