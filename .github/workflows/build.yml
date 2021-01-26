@@ -33,13 +33,32 @@ jobs:
           channel: "beta"
       - run: flutter pub get
       - run: flutter clean
-      - run: flutter build ios --release --no-codesign
+      - run: flutter build ipa --release --no-codesign
       - name: Upload iPA
         uses: actions/upload-artifact@master
         with:
           name: ios-build
           path: build/ios/iphoneos
 
+  build_ipa:
+    name: Build Flutter (iOS)
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "beta"
+      - run: flutter pub get
+      - run: flutter clean
+      - run: flutter build ipa --release
+      - name: Upload iPA
+        uses: actions/upload-artifact@master
+        with:
+          name: ipa-build
+          path: build/ios/iphoneos
   build_apk:
     name: Build Flutter APK (Android)
     runs-on: ubuntu-latest
