@@ -38,14 +38,34 @@ jobs:
       - run: mv ./build/ios/iphoneos/Runner.app Payload
       - run: zip -r -y Payload.zip Payload/Runner.app
       - run: mv Payload.zip Runner.ipa
-
       - name: Upload iPA
         uses: actions/upload-artifact@master
         with:
           name: ios-build
           path: Runner.ipa
+
+  # build_ipa:
+  #   name: Build Flutter (iOS)
+  #   runs-on: macOS-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-java@v1
+  #       with:
+  #         java-version: "12.x"
+  #     - uses: subosito/flutter-action@v1
+  #       with:
+  #         channel: "beta"
+  #     - run: flutter pub get
+  #     - run: flutter clean
+  #     - run: flutter build ipa --release
+  #     - name: Upload iPA
+  #       uses: actions/upload-artifact@master
+  #       with:
+  #         name: ipa-build
+  #         path: build/ios/archive
+
   build_apk:
-    name: Build Flutter (Android)
+    name: Build Flutter APK (Android)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -57,18 +77,30 @@ jobs:
           channel: "beta"
       - run: flutter pub get
       - run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
-      # - run: flutter build appbundle --target-platform android-arm,android-arm64
-
       - name: Upload APK
         uses: actions/upload-artifact@master
         with:
           name: apk-build
           path: build/app/outputs/apk/release
-      # - name: Upload APK 64 bits
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: apk-build
-      #     path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+
+  build_appbundle:
+    name: Build Flutter APP Bundle (Android)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "beta"
+      - run: flutter pub get
+      - run: flutter build appbundle --target-platform android-arm,android-arm64
+      - name: Upload APK
+        uses: actions/upload-artifact@master
+        with:
+          name: appbundle-build
+          path: build/app/outputs/apk/release
   # deploy_web:
   #   name: Deploy Web to Firebase Hosting
   #   needs: build_web
@@ -144,7 +176,7 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_IOS_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          group: beta
+          groups: beta
           file: Runner.ipa
   beta_apk:
     name: Upload Android Beta to Firebase App Distribution
@@ -165,12 +197,12 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          group: beta
+          groups: beta
           file: app-armeabi-v7a-release.apk
       - name: Upload 64 bits APK
         uses: wzieba/Firebase-Distribution-Github-Action@v1.0.0
         with:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          group: beta
+          groups: beta
           file: app-arm64-v8a-release.apk
