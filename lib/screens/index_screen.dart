@@ -12,9 +12,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-// import 'package:filesystem_picker/filesystem_picker.dart';
-// import 'package:path_provider/path_provider.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
 class IndexScreen extends StatefulWidget {
   Box<Playlist> playlistBox;
@@ -31,8 +28,6 @@ class IndexScreen extends StatefulWidget {
 class _IndexScreenState extends State<IndexScreen> {
   bool _buttonImportLoading = false;
 
-  // FileTileSelectMode filePickerSelectMode = FileTileSelectMode.checkButton;
-
   Future<void> handleImportFile() async {
     setState(() {
       _buttonImportLoading = true;
@@ -46,23 +41,6 @@ class _IndexScreenState extends State<IndexScreen> {
 
       if (result?.files.single.path != null) {
         File file = File(result!.files.single.path!);
-
-        // final rootPath = await getTemporaryDirectory();
-
-        // String path = await FilesystemPicker.open(
-        //   title: 'Open file',
-        //   context: context,
-        //   rootDirectory: rootPath,
-        //   fsType: FilesystemType.file,
-        //   folderIconColor: Colors.teal,
-        //   allowedExtensions: ['.json'],
-        //   fileTileSelectMode: filePickerSelectMode,
-        //   requestPermission: () async =>
-        //       await Permission.storage.request().isGranted,
-        // );
-
-        // if (path != null) {
-        //   File file = File(path);
 
         final importedObject = jsonDecode(await file.readAsString());
 
