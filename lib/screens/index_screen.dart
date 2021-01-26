@@ -1,7 +1,6 @@
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/device_list.dart';
 import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
