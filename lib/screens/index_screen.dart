@@ -1,14 +1,14 @@
-// import 'dart:convert';
-// import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
 
-// import 'package:LucaPlay/helpers/snackbar_helper.dart';
-// import 'package:LucaPlay/models/video.dart';
+import 'package:LucaPlay/helpers/snackbar_helper.dart';
+import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -39,53 +39,56 @@ class _IndexScreenState extends State<IndexScreen> {
     });
 
     try {
-      // final result = await FilePicker.platform.pickFiles(
-      //   type: FileType.custom,
-      //   allowedExtensions: ['json'],
-      // );
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
 
-      // final rootPath = await getTemporaryDirectory();
+      if (result?.files.single.path != null) {
+        File file = File(result!.files.single.path!);
 
-      // String path = await FilesystemPicker.open(
-      //   title: 'Open file',
-      //   context: context,
-      //   rootDirectory: rootPath,
-      //   fsType: FilesystemType.file,
-      //   folderIconColor: Colors.teal,
-      //   allowedExtensions: ['.json'],
-      //   fileTileSelectMode: filePickerSelectMode,
-      //   requestPermission: () async =>
-      //       await Permission.storage.request().isGranted,
-      // );
+        // final rootPath = await getTemporaryDirectory();
 
-      // if (path != null) {
-      //   File file = File(path);
+        // String path = await FilesystemPicker.open(
+        //   title: 'Open file',
+        //   context: context,
+        //   rootDirectory: rootPath,
+        //   fsType: FilesystemType.file,
+        //   folderIconColor: Colors.teal,
+        //   allowedExtensions: ['.json'],
+        //   fileTileSelectMode: filePickerSelectMode,
+        //   requestPermission: () async =>
+        //       await Permission.storage.request().isGranted,
+        // );
 
-      //   final importedObject = jsonDecode(await file.readAsString());
+        // if (path != null) {
+        //   File file = File(path);
 
-      //   final List<Video> videos = [];
-      //   for (var videoObject in importedObject["videos"] ?? []) {
-      //     videos.add(Video(
-      //       title: videoObject["title"],
-      //       url: videoObject["url"],
-      //       image: videoObject["image"],
-      //     ));
-      //   }
+        final importedObject = jsonDecode(await file.readAsString());
 
-      //   final playlist = Playlist(
-      //     name: importedObject["name"],
-      //     videos: videos,
-      //   );
+        final List<Video> videos = [];
+        for (var videoObject in importedObject["videos"] ?? []) {
+          videos.add(Video(
+            title: videoObject["title"],
+            url: videoObject["url"],
+            image: videoObject["image"],
+          ));
+        }
 
-      //   await this.widget.playlistBox.add(
-      //         playlist,
-      //       );
+        final playlist = Playlist(
+          name: importedObject["name"],
+          videos: videos,
+        );
 
-      //   SnackbarHelper.show(
-      //     context: context,
-      //     text: 'Playlist importada com sucesso!',
-      //   );
-      // }
+        await this.widget.playlistBox.add(
+              playlist,
+            );
+
+        SnackbarHelper.show(
+          context: context,
+          text: 'Playlist importada com sucesso!',
+        );
+      }
     } catch (e) {
       throw e;
     } finally {
