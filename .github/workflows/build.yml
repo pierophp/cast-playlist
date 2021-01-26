@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ipa-build
-          path: build/ios/iphoneos
+          path: build/ios/archive
   build_apk:
     name: Build Flutter APK (Android)
     runs-on: ubuntu-latest
