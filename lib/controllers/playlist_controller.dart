@@ -2,7 +2,6 @@ import 'package:LucaPlay/models/playlist.dart';
 import 'package:LucaPlay/routes.dart';
 import 'package:LucaPlay/screens/playlist_screen.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
-import 'package:LucaPlay/widgets/custom_appbar.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -47,16 +46,9 @@ class PlaylistController extends StatelessWidget {
                 return CustomLoading();
               }
 
-              return Scaffold(
-                backgroundColor: const Color(0xffF8F8F8),
-                body: PlaylistScreen(
-                  playlistBox: box,
-                  playlist: playlist,
-                ),
-                appBar: CustomAppBar(
-                  title: 'LUCA PLAY - ' + playlist.name,
-                  withLogo: false,
-                ),
+              return PlaylistScreen(
+                playlistBox: box,
+                playlist: playlist,
               );
             });
       },

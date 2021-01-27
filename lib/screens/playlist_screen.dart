@@ -1,5 +1,6 @@
 import 'package:LucaPlay/core/service/chromecast_service.dart';
 import 'package:LucaPlay/routes.dart';
+import 'package:LucaPlay/widgets/custom_appbar.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
@@ -122,6 +123,11 @@ class PlaylistScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF8F8F8),
+      appBar: CustomAppBar(
+        title: 'LUCA PLAY - ' + playlist.name,
+        withLogo: false,
+      ),
       body: ListView(
         children: [
           this._buildBody(context),

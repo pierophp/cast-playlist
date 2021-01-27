@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:LucaPlay/helpers/snackbar_helper.dart';
 import 'package:LucaPlay/models/video.dart';
 import 'package:LucaPlay/routes.dart';
+import 'package:LucaPlay/widgets/custom_appbar.dart';
 import 'package:LucaPlay/widgets/custom_button.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
 import 'package:LucaPlay/models/playlist.dart';
@@ -116,6 +117,11 @@ class _IndexScreenState extends State<IndexScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF8F8F8),
+      appBar: CustomAppBar(
+        title: 'LUCA PLAY',
+        withLogo: false,
+      ),
       body: ListView(
         children: [
           this._buildBody(context),
