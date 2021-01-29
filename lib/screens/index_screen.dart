@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class IndexScreen extends StatefulWidget {
-  Box<Playlist> playlistBox;
+  final Box<Playlist> playlistBox;
 
   IndexScreen({
     Key? key,
@@ -143,9 +143,12 @@ class _IndexScreenState extends State<IndexScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
             context: context,
             isScrollControlled: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             builder: (BuildContext context) {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.8,

@@ -85,7 +85,6 @@ class UpsertPlaylistModalState extends State<UpsertPlaylistModal> {
       key: _formKey,
       child: Container(
         padding: EdgeInsets.fromLTRB(24, 32, 24, 24),
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

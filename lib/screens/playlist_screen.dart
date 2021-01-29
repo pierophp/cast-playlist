@@ -14,22 +14,26 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class PlaylistScreen extends StatelessWidget {
-  Box<Playlist> playlistBox;
-  Playlist playlist;
+  final Box<Playlist> playlistBox;
+  final Playlist playlist;
 
   PlaylistScreen({
     Key? key,
-    required Box<Playlist> this.playlistBox,
-    required Playlist this.playlist,
+    required this.playlistBox,
+    required this.playlist,
   }) : super(key: key);
 
   Future<void> handlePlayAll() async {
+    var videos = playlist.videos ?? [];
+
+    videos.shuffle();
+
     final request = {
       'requestId': 2,
       'type': 'LOAD',
       'queueData': {
         'name': this.playlist.name,
-        'items': playlist.videos?.map((video) {
+        'items': videos.map((video) {
           return {
             'media': {
               'contentId': video.url,
@@ -137,23 +141,13 @@ class PlaylistScreen extends StatelessWidget {
               SizedBox(height: 16),
               CustomButton(
                 onPressed: () async {
-                  router.navigateTo(
-                    context,
-                    "/",
-                    transition: TransitionType.inFromLeft,
-                  );
-                },
-                icon: Icons.arrow_back,
-                iconPosition: IconPosition.leading,
-                buttonText: 'Voltar',
-              ),
-              SizedBox(height: 16),
-              CustomButton(
-                onPressed: () async {
                   showModalBottomSheet<void>(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
                     context: context,
                     isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.white,
                     builder: (BuildContext context) {
                       return Container(
                         height: MediaQuery.of(context).size.height * 0.8,
@@ -172,12 +166,37 @@ class PlaylistScreen extends StatelessWidget {
               SizedBox(height: 16),
               CustomButton(
                 onPressed: () async {
-                  await playlist.delete();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Confirmação"),
+                        content: Text(
+                          "Tem certeza que deseja apagar essa playlist?",
+                        ),
+                        actions: [
+                          FlatButton(
+                            child: Text("Não"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          FlatButton(
+                            child: Text("Sim"),
+                            onPressed: () async {
+                              await playlist.delete();
 
-                  router.navigateTo(
-                    context,
-                    "/",
-                    transition: TransitionType.inFromLeft,
+                              router.navigateTo(
+                                context,
+                                "/",
+                                transition: TransitionType.inFromLeft,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                      ;
+                    },
                   );
                 },
                 backgroundColor: Colors.red,
@@ -192,9 +211,12 @@ class PlaylistScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
             context: context,
             isScrollControlled: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             builder: (BuildContext context) {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.8,

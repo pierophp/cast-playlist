@@ -20,7 +20,6 @@ class CastDevicesModalState extends State<CastDevicesModal> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(24, 32, 24, 24),
-      color: Colors.white,
       child: StreamBuilder<List<CastDevice>>(
         stream: CastDiscoveryService().stream,
         initialData: CastDiscoveryService().devices,

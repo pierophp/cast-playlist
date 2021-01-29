@@ -15,7 +15,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.canPop(context);
+
     return AppBar(
+      leading: canPop
+          ? BackButton(
+              color: Colors.black,
+            )
+          : null,
       title: getMain(
         this.withLogo,
         this.title,
@@ -30,9 +37,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.black,
             onPressed: () {
               showModalBottomSheet<void>(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white,
                 builder: (BuildContext context) {
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.8,
