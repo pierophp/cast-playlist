@@ -33,6 +33,7 @@ dependencies:
   hive_flutter: ^0.3.1
   hive: ^1.4.4+1
   localstorage: ^3.0.5+8
+  sleek_circular_slider: ^1.2.0+web
 
 dev_dependencies:
   flutter_test:

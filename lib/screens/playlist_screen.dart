@@ -28,37 +28,9 @@ class PlaylistScreen extends StatelessWidget {
 
     videos.shuffle();
 
-    final request = {
-      'requestId': 2,
-      'type': 'LOAD',
-      'queueData': {
-        'name': this.playlist.name,
-        'items': videos.map((video) {
-          return {
-            'media': {
-              'contentId': video.url,
-              'contentType': 'video/mp4',
-              'streamType': 'BUFFERED',
-              'autoplay': true,
-              'metadata': {
-                'type': 0,
-                'metadataType': 0,
-                'title': video.title,
-                'images': [
-                  {
-                    'url': video.image,
-                  }
-                ]
-              }
-            },
-          };
-        }).toList(),
-      },
-    };
-
-    ChromecastService.session?.sendMessage(
-      CastSession.kNamespaceMedia,
-      request,
+    ChromecastService().loadVideosOnQueue(
+      playlist,
+      videos,
     );
   }
 
