@@ -1,6 +1,7 @@
 import 'package:LucaPlay/core/service/chromecast_service.dart';
 import 'package:LucaPlay/widgets/custom_loading.dart';
 import 'package:LucaPlay/widgets/custom_typography.dart';
+import 'package:LucaPlay/widgets/player.dart';
 import 'package:cast/cast.dart';
 import 'package:flutter/material.dart';
 
@@ -38,16 +39,32 @@ class CastDevicesModalState extends State<CastDevicesModal> {
                 color: Colors.black,
                 textAlign: TextAlign.center,
               ),
+              SizedBox(height: 20),
               ...snapshot.data!.map((device) {
-                return ListTile(
-                  title: Text(device.name),
-                  onTap: () async {
-                    await ChromecastService().connect(device);
+                return Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ChromecastService.connectedDevice?.serviceName ==
+                                device.serviceName
+                            ? Colors.yellow
+                            : Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      child: ListTile(
+                        title: Text(device.name),
+                        onTap: () async {
+                          await ChromecastService().connect(device);
 
-                    Navigator.pop(context);
-                  },
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
                 );
               }).toList(),
+              Player(),
             ],
           );
         },
