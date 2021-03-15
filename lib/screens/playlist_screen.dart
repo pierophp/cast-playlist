@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class PlaylistScreen extends StatelessWidget {
-  Box<Playlist> playlistBox;
-  Playlist playlist;
+  final Box<Playlist> playlistBox;
+  final Playlist playlist;
 
   PlaylistScreen({
     Key? key,
