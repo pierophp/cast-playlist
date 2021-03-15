@@ -29,6 +29,8 @@ class CastDevicesModalState extends State<CastDevicesModal> {
             return CustomLoading();
           }
 
+          bool hasConnected = false;
+
           return Column(
             children: [
               CustomTypography(
@@ -40,31 +42,40 @@ class CastDevicesModalState extends State<CastDevicesModal> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
-              ...snapshot.data!.map((device) {
-                return Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: ChromecastService.connectedDevice?.serviceName ==
-                                device.serviceName
-                            ? Colors.yellow
-                            : Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      child: ListTile(
-                        title: Text(device.name),
-                        onTap: () async {
-                          await ChromecastService().connect(device);
+              ...snapshot.data!.map(
+                (device) {
+                  final bool isConnected =
+                      ChromecastService.connectedDevice?.serviceName ==
+                              device.serviceName &&
+                          ChromecastService.session?.state ==
+                              CastSessionState.connected;
 
-                          Navigator.pop(context);
-                        },
+                  if (isConnected) {
+                    hasConnected = true;
+                  }
+
+                  return Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: isConnected ? Colors.yellow : Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: ListTile(
+                          title: Text(device.name),
+                          onTap: () async {
+                            await ChromecastService().connect(device);
+
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                );
-              }).toList(),
-              Player(),
+                      SizedBox(height: 10),
+                    ],
+                  );
+                },
+              ).toList(),
+              ...hasConnected ? [Player()] : [],
             ],
           );
         },

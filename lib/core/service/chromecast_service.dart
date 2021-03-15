@@ -27,6 +27,7 @@ class ChromecastService {
   static CastSession? session;
   static CastDevice? connectedDevice;
   static bool connected = false;
+  int _requestId = 1000;
 
   bool listenMediaStatusRunning = false;
 
@@ -90,8 +91,10 @@ class ChromecastService {
   }
 
   Future<MediaStatus?> getMediaInfo() async {
+    final scopedRequestId = _requestId++;
+
     final request = {
-      'requestId': 0, // A lib sobrescreve isso
+      'requestId': scopedRequestId,
       'type': 'GET_STATUS',
     };
 
@@ -103,7 +106,7 @@ class ChromecastService {
     );
 
     final listen = ChromecastService.session?.messageStream.listen((message) {
-      if (message["type"] == "MEDIA_STATUS") {
+      if (message["requestId"] == scopedRequestId) {
         if (message["status"].length == 0) {
           completer.complete();
           return;
@@ -140,8 +143,10 @@ class ChromecastService {
       return;
     }
 
+    final scopedRequestId = _requestId++;
+
     final request = {
-      'requestId': 0, // A lib sobrescreve isso
+      'requestId': scopedRequestId, // A lib sobrescreve isso
       'mediaSessionId': mediaStatus.mediaSessionId,
       'type': 'SET_VOLUME',
       'volume': {
@@ -151,13 +156,19 @@ class ChromecastService {
 
     final completer = Completer<void>();
 
+    print(request);
+
+    ChromecastService.session?.sendMessage(
+      CastSession.kNamespaceReceiver,
+      request,
+    );
+
     final listen = ChromecastService.session?.messageStream.listen((message) {
       if (message["type"] == "INVALID_REQUEST") {
-        print(message);
         completer.complete();
         return;
       }
-      if (message["type"] == "MEDIA_STATUS") {
+      if (message["requestId"] == scopedRequestId) {
         if (message["status"].length == 0) {
           completer.complete();
           return;
@@ -176,11 +187,6 @@ class ChromecastService {
         completer.complete(mediaStatus);
       }
     });
-
-    ChromecastService.session?.sendMessage(
-      CastSession.kNamespaceMedia,
-      request,
-    );
 
     if (listen != null) {
       await completer.future;
