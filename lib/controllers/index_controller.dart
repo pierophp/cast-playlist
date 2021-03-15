@@ -1,6 +1,6 @@
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/screens/index_screen.dart';
-import 'package:LucaPlay/widgets/custom_loading.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/screens/index_screen.dart';
+import 'package:luca_play/widgets/custom_loading.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -30,7 +30,7 @@ class IndexController extends StatelessWidget {
 }
 
 var indexHandler = Handler(handlerFunc: (
-  BuildContext context,
+  BuildContext? context,
   Map<String, dynamic> params,
 ) {
   return IndexController();

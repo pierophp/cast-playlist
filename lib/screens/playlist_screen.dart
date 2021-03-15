@@ -1,14 +1,13 @@
-import 'package:LucaPlay/core/service/chromecast_service.dart';
-import 'package:LucaPlay/routes.dart';
-import 'package:LucaPlay/widgets/custom_appbar.dart';
-import 'package:LucaPlay/widgets/custom_button.dart';
-import 'package:LucaPlay/widgets/custom_loading.dart';
-import 'package:LucaPlay/widgets/custom_typography.dart';
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
-import 'package:LucaPlay/widgets/modals/upsert_video_modal.dart';
+import 'package:luca_play/core/service/chromecast_service.dart';
+import 'package:luca_play/routes.dart';
+import 'package:luca_play/widgets/custom_appbar.dart';
+import 'package:luca_play/widgets/custom_button.dart';
+import 'package:luca_play/widgets/custom_loading.dart';
+import 'package:luca_play/widgets/custom_typography.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/widgets/modals/upsert_playlist_modal.dart';
+import 'package:luca_play/widgets/modals/upsert_video_modal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cast/cast.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -71,13 +70,16 @@ class PlaylistScreen extends StatelessWidget {
                 ListTile(
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(3),
-                    child: CachedNetworkImage(
-                      width: 120,
-                      height: 44,
-                      imageUrl: video.image,
-                      placeholder: (context, url) => CustomLoading(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ),
+                    child: video.image != null
+                        ? CachedNetworkImage(
+                            width: 120,
+                            height: 44,
+                            imageUrl: video.image!,
+                            placeholder: (context, url) => CustomLoading(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        : null,
                   ),
                   title: CustomTypography(
                     text: video.title,

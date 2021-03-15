@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/models/video.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/models/video.dart';
 import 'package:cast/cast.dart';
 
 // DOCS

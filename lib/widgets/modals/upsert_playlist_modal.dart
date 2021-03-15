@@ -1,8 +1,8 @@
-import 'package:LucaPlay/helpers/snackbar_helper.dart';
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/custom_button.dart';
-import 'package:LucaPlay/widgets/custom_typography.dart';
-import 'package:LucaPlay/widgets/input.dart';
+import 'package:luca_play/helpers/snackbar_helper.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/widgets/custom_button.dart';
+import 'package:luca_play/widgets/custom_typography.dart';
+import 'package:luca_play/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

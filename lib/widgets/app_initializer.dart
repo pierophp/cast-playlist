@@ -1,10 +1,10 @@
-import 'package:LucaPlay/routes.dart';
+import 'package:luca_play/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:cast/discovery_service.dart';
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/models/video.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/models/video.dart';
 
 class AppInitializer extends StatefulWidget {
   final Widget Function(BuildContext) onDidInitilize;

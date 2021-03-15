@@ -1,5 +1,5 @@
-import 'package:LucaPlay/core/service/chromecast_service.dart';
-import 'package:LucaPlay/widgets/custom_button.dart';
+import 'package:luca_play/core/service/chromecast_service.dart';
+import 'package:luca_play/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 

@@ -1,14 +1,14 @@
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/routes.dart';
-import 'package:LucaPlay/screens/playlist_screen.dart';
-import 'package:LucaPlay/widgets/custom_loading.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/routes.dart';
+import 'package:luca_play/screens/playlist_screen.dart';
+import 'package:luca_play/widgets/custom_loading.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class PlaylistController extends StatelessWidget {
-  String code;
+  final String code;
 
   PlaylistController({
     Key? key,
@@ -31,11 +31,17 @@ class PlaylistController extends StatelessWidget {
                 return CustomLoading();
               }
 
-              final playlist = box.values.firstWhere(
+              try {
+                // Mudar para orElse quando tiver exemplo de como fazer Null Safety
+                final playlist = box.values.firstWhere(
                   (playlist) => playlist.key.toString() == this.code,
-                  orElse: () => null);
+                );
 
-              if (playlist == null) {
+                return PlaylistScreen(
+                  playlistBox: box,
+                  playlist: playlist,
+                );
+              } catch (e) {
                 Future.delayed(Duration.zero, () {
                   router.navigateTo(
                     context,
@@ -45,11 +51,6 @@ class PlaylistController extends StatelessWidget {
                 });
                 return CustomLoading();
               }
-
-              return PlaylistScreen(
-                playlistBox: box,
-                playlist: playlist,
-              );
             });
       },
     );
@@ -57,7 +58,7 @@ class PlaylistController extends StatelessWidget {
 }
 
 var playlistHandler = Handler(handlerFunc: (
-  BuildContext context,
+  BuildContext? context,
   Map<String, dynamic> params,
 ) {
   return PlaylistController(

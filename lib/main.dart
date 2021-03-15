@@ -2,8 +2,8 @@
 // https://dart.dev/null-safety/unsound-null-safety
 // @dart=2.9
 
-import 'package:LucaPlay/widgets/app_initializer.dart';
-import 'package:LucaPlay/widgets/custom_loading.dart';
+import 'package:luca_play/widgets/app_initializer.dart';
+import 'package:luca_play/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
 
 import './routes.dart';

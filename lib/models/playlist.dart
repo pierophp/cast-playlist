@@ -1,4 +1,4 @@
-import 'package:LucaPlay/models/video.dart';
+import 'package:luca_play/models/video.dart';
 import 'package:hive/hive.dart';
 part 'playlist.g.dart';
 
