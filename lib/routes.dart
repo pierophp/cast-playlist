@@ -1,5 +1,5 @@
-import 'package:LucaPlay/controllers/index_controller.dart';
-import 'package:LucaPlay/controllers/playlist_controller.dart';
+import 'package:luca_play/controllers/index_controller.dart';
+import 'package:luca_play/controllers/playlist_controller.dart';
 import 'package:fluro/fluro.dart';
 
 final router = FluroRouter.appRouter;

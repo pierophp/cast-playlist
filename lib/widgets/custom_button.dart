@@ -36,7 +36,7 @@ class CustomButton extends StatelessWidget {
         ? Column(
             children: [
               Center(
-                child: getIcon(this.buttonText, this.iconPosition, this.icon),
+                child: _getIcon(),
               )
             ],
           )
@@ -59,6 +59,7 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(60.0),
         ),
+        padding: EdgeInsets.symmetric(vertical: 25),
         side: withBorder
             ? BorderSide(
                 color: this.borderColor,
@@ -74,48 +75,44 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
-}
 
-dynamic getIcon(
-  String? buttonText,
-  IconPosition? iconPosition,
-  IconData? icon,
-) {
-  if (iconPosition == IconPosition.leading) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 16.0,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child: Text(
-            buttonText ?? "",
+  Widget? _getIcon() {
+    if (this.iconPosition == IconPosition.leading) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: this.fontSize,
           ),
-        ),
-      ],
-    );
-  }
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Text(
+              this.buttonText ?? "",
+            ),
+          ),
+        ],
+      );
+    }
 
-  if (iconPosition == IconPosition.trailing) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 12.0),
-          child: Text(
-            buttonText ?? "",
+    if (this.iconPosition == IconPosition.trailing) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Text(
+              this.buttonText ?? "",
+            ),
           ),
-        ),
-        Icon(
-          icon,
-          size: 16.0,
-        ),
-      ],
-    );
+          Icon(
+            icon,
+            size: this.fontSize,
+          ),
+        ],
+      );
+    }
   }
 }

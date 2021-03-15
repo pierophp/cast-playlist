@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:LucaPlay/helpers/snackbar_helper.dart';
-import 'package:LucaPlay/models/video.dart';
-import 'package:LucaPlay/routes.dart';
-import 'package:LucaPlay/widgets/custom_appbar.dart';
-import 'package:LucaPlay/widgets/custom_button.dart';
-import 'package:LucaPlay/widgets/custom_typography.dart';
-import 'package:LucaPlay/models/playlist.dart';
-import 'package:LucaPlay/widgets/modals/upsert_playlist_modal.dart';
+import 'package:luca_play/helpers/snackbar_helper.dart';
+import 'package:luca_play/models/video.dart';
+import 'package:luca_play/routes.dart';
+import 'package:luca_play/widgets/custom_appbar.dart';
+import 'package:luca_play/widgets/custom_button.dart';
+import 'package:luca_play/widgets/custom_typography.dart';
+import 'package:luca_play/models/playlist.dart';
+import 'package:luca_play/widgets/modals/upsert_playlist_modal.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class IndexScreen extends StatefulWidget {
-  Box<Playlist> playlistBox;
+  final Box<Playlist> playlistBox;
 
   IndexScreen({
     Key? key,
@@ -143,9 +143,12 @@ class _IndexScreenState extends State<IndexScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
             context: context,
             isScrollControlled: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             builder: (BuildContext context) {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.8,

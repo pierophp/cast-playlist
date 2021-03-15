@@ -1,5 +1,5 @@
-import 'package:LucaPlay/main.dart';
-import 'package:LucaPlay/widgets/custom_typography.dart';
+import 'package:luca_play/main.dart';
+import 'package:luca_play/widgets/custom_typography.dart';
 import 'package:flutter/material.dart';
 
 class SnackbarHelper {
